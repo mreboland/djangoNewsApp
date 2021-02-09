@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    # Our apps
+    "accounts",
 ]
 
 MIDDLEWARE = [
@@ -118,3 +121,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# We want to use our own User model in place of the built in one. So we specify the below to do so.
+AUTH_USER_MODEL = "accounts.CustomUser"
