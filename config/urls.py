@@ -23,5 +23,7 @@ urlpatterns = [
     # We include both our accounts app and the built in auth app which contains the built in views for log in and out. We place them both at accounts/ so we get accounts/login, /logout etc.
     path("accounts/", include("accounts.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
-    path("", TemplateView.as_view(template_name="home.html"), name="home"),
+    # path("", TemplateView.as_view(template_name="home.html"), name="home"),
+    # We will now be building our own homepage in our new app pages. We don't need the 'hack' way of using the above to imitate the homepage.
+    path("", include("pages.urls")),
 ]
