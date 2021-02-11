@@ -135,3 +135,7 @@ LOGOUT_REDIRECT_URL = "home"
 
 # config/settings.py
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# Adding functionality for emailing user if they forgot their password.
+# /accounts/password_reset/
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
