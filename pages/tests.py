@@ -2,6 +2,7 @@
 from django.contrib.auth import get_user_model
 # SimpleTestCase is fine for testint the homepage as it doesn't use any db code. However the sign up page does so we need to use TestCase for it.
 from django.test import SimpleTestCase, TestCase
+# Use reverse() to give you the url of a page, given either the path to the view, or the page_name parameter from your url conf.
 from django.urls import reverse
 
 # We only need tests for our home and sign up pages and not our log in and out. The reason is the latter 2 are a part of django and unless we've made substantial changes to django's built in system there is no need to test it. We do not need to add tests for core django functionality.
