@@ -138,4 +138,14 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Adding functionality for emailing user if they forgot their password.
 # /accounts/password_reset/
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+# EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+# Modifying the above to use sendgrid emails using smtp
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# The below block of code is needed to be able to send the emails
+# We should be using environment variables, and not plain text. As such i'll be omitting the below for now.
+DEFAULT_FROM_EMAIL = 'your_custom_email_account'
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = 'sendgrid_password'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
