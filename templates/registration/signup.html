@@ -1,13 +1,15 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
 {% block title %}Sign Up{% endblock title %}
 
 {% block content %}
     <h2>Sign Up</h2>
-
+    <!-- To restyle the sign up page to modify the requirements (that are not the best looking) we can install an addon called django-crispy-forms which will allow us to style them. We use pipenv install django-crispy-forms to get it. Once done, we add it to our config settings under installed apps along with adding 'CRISPY_TEMPLATE_PACK = 'bootstrap4'' to the end of the config file. We load crispy at the top then add a modifier to the form below. -->
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Sign Up</button>
+        <!-- {{ form.as_p }} -->
+        {{ form|crispy }}
+        <button class="btn btn-success"type="submit">Sign Up</button>
     </form>
 {% endblock content %}
