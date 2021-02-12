@@ -1,6 +1,6 @@
 # List view is to show many items (a list), detail view is used to show 1 item.
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import UpdateView, DeleteView
+from django.views.generic.edit import UpdateView, DeleteView, CreateView
 # reverse_lazy won't execute until the value is needed
 # revers: It’s similar to the url template tag which use to convert namespaced url to real url pattern.
 # It is useful because it prevent 'Reverse Not Found' exceptions when working with URLs that may not be immediately known.
@@ -32,3 +32,13 @@ class ArticleDeleteView(DeleteView):
     model = Article
     template_name = "article_delete.html"
     success_url = reverse_lazy("article_list")
+
+# We added author to our fields as we want to specify who wrote it. However once it's written we do not want the author to be changed hence in the edit view it's not included
+class ArticleCreateView(CreateView):
+    model = Article
+    template_name = "article_new.html"
+    fields = (
+        "title",
+        "body",
+        "author"
+    )
