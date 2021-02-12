@@ -34,11 +34,17 @@ class ArticleDeleteView(DeleteView):
     success_url = reverse_lazy("article_list")
 
 # We added author to our fields as we want to specify who wrote it. However once it's written we do not want the author to be changed hence in the edit view it's not included
+# At present the author on a new article can be set to any user. However we want it so it will automatically set to the current user.
+# To do so, we'll remove author from fields and instead set it automatically via the form_valid method.
 class ArticleCreateView(CreateView):
     model = Article
     template_name = "article_new.html"
     fields = (
         "title",
         "body",
-        "author"
+        # "author"
     )
+    
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
