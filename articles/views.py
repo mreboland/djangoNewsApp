@@ -1,6 +1,9 @@
 # List view is to show many items (a list), detail view is used to show 1 item.
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import UpdateView, DeleteView
+# reverse_lazy won't execute until the value is needed
+# revers: It’s similar to the url template tag which use to convert namespaced url to real url pattern.
+# It is useful because it prevent 'Reverse Not Found' exceptions when working with URLs that may not be immediately known.
 from django.urls import reverse_lazy
 from .models import Article
 
