@@ -16,7 +16,7 @@ class Article(models.Model):
     def __str__(self):
         return self.title
     
-    # When we create a new article and click save we are redirected to the detail page.
+    # When we create or edit a new article and click save we are redirected to the detail page. If we don't have this we'll get an error saying we need a get_absolute_url.
     # https://stackoverflow.com/questions/43179875/when-to-use-django-get-absolute-url-method
     def get_absolute_url(self):
         return reverse("article_detail", args=[str(self.id)])
