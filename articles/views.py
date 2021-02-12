@@ -4,7 +4,8 @@
 # generic view, Django breaks out this functionality into a “mixin” known as
 # TemplateResponseMixin170. Both ListView and DetailView use this mixin to render the proper
 # template. LoginRequiredMixin is a powerful mixin that makes restricting access to logged in users easy.
-from django.contrib.auth.mixins import LoginRequiredMixin
+# To restrict users so they can only modify their own articles, we will use another mixin, UserPassesTestMixin. We will add said mixing the the update, and delete views.
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 # List view is to show many items (a list), detail view is used to show 1 item.
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
@@ -30,7 +31,7 @@ class ArticleDetailView(LoginRequiredMixin, DetailView):
     template_name = "article_detail.html"
     
 
-class ArticleUpdateView(LoginRequiredMixin, UpdateView):
+class ArticleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Article
     fields = (
         "title",
@@ -38,11 +39,20 @@ class ArticleUpdateView(LoginRequiredMixin, UpdateView):
     )
     template_name = "article_edit.html"
     
+    # The test_func methodis used by UserPassesTestMixin for our logic. We need to override it. We do so by setting the var obj to the current object returned by the view using get_object(). We then say if the author on the current object matches the current user on the webpage (whoever is logged in and trying to make the change), then allow it. If false, an error will be auto thrown.
+    def test_func(self):
+        obj = self.get_object()
+        return obj.author == self.request.user
+    
 
-class ArticleDeleteView(LoginRequiredMixin, DeleteView):
+class ArticleDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Article
     template_name = "article_delete.html"
     success_url = reverse_lazy("article_list")
+    
+    def test_func(self):
+        obj = self.get_object()
+        return obj.author == self.request.user
 
 # We added author to our fields as we want to specify who wrote it. However once it's written we do not want the author to be changed hence in the edit view it's not included
 # At present the author on a new article can be set to any user. However we want it so it will automatically set to the current user.
