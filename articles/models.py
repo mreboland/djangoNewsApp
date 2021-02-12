@@ -20,3 +20,22 @@ class Article(models.Model):
     # https://stackoverflow.com/questions/43179875/when-to-use-django-get-absolute-url-method
     def get_absolute_url(self):
         return reverse("article_detail", args=[str(self.id)])
+
+
+# We want to have users be able to add comments to our articles. We will do so using a foreignKey and the model which will handle it will have a many-to-one relationship with Article. One article can have many components but not the other way around.
+# Traditionally the name of the foreign key field is simply the model it links to. So in this case it'll be called article. We'll also use two other fields, comment and author.
+
+class Comment(models.Model):
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    comment = models.CharField(max_length=140)
+    author = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.CASCADE,
+    )
+    
+    def __str__(self):
+        return self.comment
+    
+    # Return to article_list page after commenting
+    def get_absolute_url(self):
+        return reverse("article_list")
