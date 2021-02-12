@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="article-entry">
+        <h2>{{ object.title }}</h2>
+        <p>by {{ object.author }} | {{ object.date }}</p>
+        <p>{{ object.body }}</p>
+    </div>
+
+    <p>
+        <!-- When we go to our article edit or delete pages, we need to pass along the articles id (pk) which is stored automatically by our model Article. We access the id by using the model name lower cased and using dot notation to pass along the value.  -->
+        <a href="{% url 'article_edit' article.pk %}">Edit</a> |
+        <a href="{% url 'article_delete' article.pk %}">Delete</a>
+    </p>
+    <p>
+        Back to <a href="{% url 'article_list' %}">All Articles.</a>
+    </p>
+{% endblock content %}
