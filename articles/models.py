@@ -26,7 +26,15 @@ class Article(models.Model):
 # Traditionally the name of the foreign key field is simply the model it links to. So in this case it'll be called article. We'll also use two other fields, comment and author.
 
 class Comment(models.Model):
-    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    article = models.ForeignKey(
+        Article,
+        on_delete=models.CASCADE,
+        # Since comments lives within our existing articles app we only need to update the templates for article_list and detail.
+        # We want to display all comments related to a specific article which is called a query. This is because we are asking the db for a specific bit of info. Working with a foreign key, we want to follow a relationship backward: for each Article look up related Comment models.
+        # To facilitate the above, we add a related_name attribute to our model which lets us explicitly set the name of the reverse relationship.
+        # A good default is to name it the plural of the model holding the foreign key.
+        related_name="comments",
+        )
     comment = models.CharField(max_length=140)
     author = models.ForeignKey(
         get_user_model(),
